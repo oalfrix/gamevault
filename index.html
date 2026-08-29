@@ -1,11 +1,63 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>GameVault — PC Game Store</title>
+<meta name="description" content="Browse, buy and download PC games and mods. Pay instantly with M-Pesa." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css" />
+<!-- Fill in your Supabase project URL + anon key here -->
+<script>
+  window.__ENV__ = {
+    SUPABASE_URL: "https://YOUR-PROJECT.supabase.co",
+    SUPABASE_ANON_KEY: "YOUR-ANON-KEY"
+  };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 </head>
 <body>
-    
+
+<header class="nav" id="site-nav"></header>
+
+<section class="hero">
+  <div class="wrap">
+    <span class="hero-tag">● Instant M-Pesa checkout</span>
+    <h1>Buy the game.<br><span>Play tonight.</span></h1>
+    <p>Pay with M-Pesa STK Push and get redirected straight to your download link — no waiting, no middlemen.</p>
+  </div>
+</section>
+
+<div class="wrap">
+  <div class="toolbar" id="offers">
+    <div class="count" id="resultCount">Loading games…</div>
+    <div class="chip-group" id="filterChips">
+      <button class="chip active" data-filter="all">All</button>
+      <button class="chip" data-filter="offer">On Offer</button>
+      <button class="chip" data-filter="free">Free</button>
+    </div>
+    <select class="sortsel" id="sortSelect">
+      <option value="popular">Sort: Popular</option>
+      <option value="price-asc">Price: Low to High</option>
+      <option value="price-desc">Price: High to Low</option>
+      <option value="name-asc">Name: A–Z</option>
+      <option value="newest">Newest</option>
+    </select>
+  </div>
+
+  <div class="grid" id="gameGrid">
+    <!-- skeleton placeholders while loading -->
+    <div class="ticket"><div class="cover skel"></div><div class="info"><div class="skel" style="height:16px;width:70%"></div></div></div>
+    <div class="ticket"><div class="cover skel"></div><div class="info"><div class="skel" style="height:16px;width:70%"></div></div></div>
+    <div class="ticket"><div class="cover skel"></div><div class="info"><div class="skel" style="height:16px;width:70%"></div></div></div>
+    <div class="ticket"><div class="cover skel"></div><div class="info"><div class="skel" style="height:16px;width:70%"></div></div></div>
+  </div>
+</div>
+
+<footer id="site-footer"></footer>
+
+<script type="module" src="js/layout.js"></script>
+<script type="module" src="js/main.js"></script>
 </body>
 </html>
