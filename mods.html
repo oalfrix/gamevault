@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Mods — GameVault</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css" />
+<script>
+  window.__ENV__ = {
+    SUPABASE_URL: "https://YOUR-PROJECT.supabase.co",
+    SUPABASE_ANON_KEY: "YOUR-ANON-KEY"
+  };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+</head>
+<body>
+
+<header class="nav" id="site-nav"></header>
+
+<section class="hero">
+  <div class="wrap">
+    <span class="hero-tag">● Community made</span>
+    <h1>Mods &amp;<br><span>add-ons.</span></h1>
+    <p>Texture packs, total conversions, QoL tweaks — for games you already own.</p>
+  </div>
+</section>
+
+<div class="wrap">
+  <div class="toolbar">
+    <div class="count" id="resultCount">Loading mods…</div>
+    <select class="sortsel" id="sortSelect">
+      <option value="popular">Sort: Popular</option>
+      <option value="price-asc">Price: Low to High</option>
+      <option value="name-asc">Name: A–Z</option>
+      <option value="newest">Newest</option>
+    </select>
+  </div>
+  <div class="grid" id="gameGrid"></div>
+</div>
+
+<footer id="site-footer"></footer>
+
+<script type="module" src="js/layout.js"></script>
+<script type="module" src="js/mods.js"></script>
+</body>
+</html>
