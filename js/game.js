@@ -59,7 +59,7 @@ async function loadGame() {
 
   currentGame = g;
   crumbTitle.textContent = g.title;
-  document.title = `${g.title} — GameVault`;
+  document.title = `${g.title} — Gamesarena`;
 
   const price = effectivePrice(g);
   const isFree = g.is_free;
