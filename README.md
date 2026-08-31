@@ -94,7 +94,41 @@ Everything is driven from the `games` table in Supabase — no code changes need
   The buy button switches to "Get Free Download" and skips M-Pesa entirely.
 - **End an offer** — `update games set offer_price = null where slug = '...';`.
 
-## 6. Editing socials, branding, nav
+## 6. Adding games through the admin panel (`admin.html`)
+
+Instead of using Supabase's dashboard, you can add games from a form at
+`https://your-site.netlify.app/admin.html`. It:
+
+- commits the cover image you upload straight into this GitHub repo (under
+  `assets/games/`) using the GitHub API, then serves it via jsDelivr's free CDN
+- inserts the game/mod into Supabase for you — no SQL needed
+- lists your whole catalog with one-click publish/unpublish, mark free, set a
+  sale price, or delete
+
+**Setup:**
+1. Pick a strong password and set it as `ADMIN_PASSWORD` in Netlify's environment
+   variables (see `.env.example`).
+2. Create a **fine-grained GitHub Personal Access Token** at
+   [github.com/settings/tokens](https://github.com/settings/tokens) scoped to just
+   this repo, with **Contents: Read and write** permission.
+3. Add `GITHUB_TOKEN`, `GITHUB_OWNER`, `GITHUB_REPO`, `GITHUB_BRANCH` to Netlify's
+   environment variables too.
+4. Redeploy, then open `/admin.html` and log in with your `ADMIN_PASSWORD`.
+
+**Notes:**
+- `admin.html` isn't linked from the storefront nav and has `noindex` set, but it's
+  still reachable by anyone who knows the URL — the password is what actually
+  protects it, so keep it strong and don't share the link publicly.
+- Every image upload creates a real commit to your repo (visible in your GitHub
+  history) — that's expected, it's how the image gets hosted for free.
+- jsDelivr's CDN cache can take a few minutes to pick up a brand-new image after
+  the first upload; refreshing the store page shortly after adding a game usually
+  clears it up.
+- This single-password setup is meant for one admin (you). If you ever need
+  multiple admin accounts with separate logins, swap `netlify/lib/adminAuth.js`
+  for real auth (e.g. Supabase Auth) — it's the only file that would need to change.
+
+## 7. Editing socials, branding, nav
 
 Edit `js/layout.js` — the `SOCIAL` object at the top holds your WhatsApp and Telegram
 links, and the nav/footer markup lives right below it (shared across every page).
@@ -121,3 +155,6 @@ port, reading env vars from a local `.env` file (copy `.env.example` → `.env`)
   after an order's status is `paid`.
 - Order amounts are always resolved server-side from the database, never trusted from
   the browser, so the price a user pays can't be tampered with client-side.
+- The admin functions (`admin-add-game`, `admin-list-games`, `admin-update-game`,
+  `admin-delete-game`) all re-check `ADMIN_PASSWORD` on every request — there's no
+  session or cookie to hijack, just don't share the password or the `/admin.html` URL.

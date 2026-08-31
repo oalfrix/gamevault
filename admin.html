@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Admin — GameVault</title>
+<meta name="robots" content="noindex, nofollow" />
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css" />
+<style>
+  /* Admin-only layout additions, kept separate from the storefront styles */
+  .admin-wrap{max-width:760px;margin:0 auto;padding:40px 20px 80px}
+  .admin-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:24px}
+  .admin-card h2{font-size:24px;margin-bottom:14px}
+  .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .form-grid .full{grid-column:1/-1}
+  @media (max-width:600px){.form-grid{grid-template-columns:1fr}}
+  .admin-field label{display:block;font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px}
+  .admin-field input, .admin-field select, .admin-field textarea{
+    width:100%;background:var(--ink-2);border:1px solid var(--border);border-radius:8px;
+    padding:10px 12px;color:var(--text);font-size:14px;font-family:inherit;
+  }
+  .admin-field textarea{resize:vertical;min-height:70px}
+  fieldset{border:1px solid var(--border);border-radius:8px;padding:12px;margin-top:6px}
+  fieldset legend{padding:0 6px;color:var(--gold);font-family:'Bebas Neue',sans-serif;letter-spacing:.05em;font-size:13px}
+  .check-row{display:flex;align-items:center;gap:8px;margin-top:6px}
+  .check-row input{width:auto}
+  .msg{font-size:13px;margin-top:12px;min-height:18px}
+  .msg.ok{color:var(--green-ok)} .msg.err{color:var(--magenta)}
+  table.admin-table{width:100%;border-collapse:collapse;font-size:13px;margin-top:10px}
+  table.admin-table th, table.admin-table td{padding:8px;border-bottom:1px solid var(--border);text-align:left;vertical-align:middle}
+  table.admin-table th{color:var(--muted);text-transform:uppercase;font-size:11px;letter-spacing:.04em}
+  .tag-pill{font-size:11px;padding:2px 8px;border-radius:999px;background:var(--surface-2);color:var(--muted)}
+  .tag-pill.live{color:var(--green-ok)} .tag-pill.hidden{color:var(--magenta)}
+  .row-actions{display:flex;gap:6px;flex-wrap:wrap}
+  .row-actions button{
+    font-size:12px;padding:5px 10px;border-radius:6px;border:1px solid var(--border);
+    background:var(--surface-2);color:var(--text);cursor:pointer;
+  }
+  .row-actions button:hover{border-color:var(--gold)}
+  .row-actions button.danger:hover{border-color:var(--magenta)}
+  #loginGate{max-width:360px;margin:80px auto;text-align:center}
+</style>
+</head>
+<body>
+
+<div class="admin-wrap">
+  <div id="loginGate" class="admin-card">
+    <h2>GameVault Admin</h2>
+    <div class="admin-field">
+      <label for="pwInput">Admin password</label>
+      <input id="pwInput" type="password" autocomplete="current-password" />
+    </div>
+    <button class="btn" id="loginBtn" style="margin-top:14px">Enter</button>
+    <div class="msg" id="loginMsg"></div>
+  </div>
+
+  <div id="adminPanel" style="display:none">
+    <div class="admin-card">
+      <h2>Add a game or mod</h2>
+      <form id="addForm" class="form-grid">
+        <div class="admin-field">
+          <label>Title</label>
+          <input name="title" required />
+        </div>
+        <div class="admin-field">
+          <label>Slug (URL id, auto-filled)</label>
+          <input name="slug" required />
+        </div>
+        <div class="admin-field">
+          <label>Type</label>
+          <select name="type">
+            <option value="game">Game</option>
+            <option value="mod">Mod</option>
+          </select>
+        </div>
+        <div class="admin-field">
+          <label>Base game (mods only)</label>
+          <input name="baseGame" placeholder="e.g. Skyforge Legends" />
+        </div>
+        <div class="admin-field">
+          <label>Genres (comma separated)</label>
+          <input name="genres" placeholder="Action, RPG" />
+        </div>
+        <div class="admin-field">
+          <label>Cover image</label>
+          <input name="image" type="file" accept="image/*" />
+        </div>
+        <div class="admin-field full">
+          <label>Description</label>
+          <textarea name="description"></textarea>
+        </div>
+
+        <fieldset class="full">
+          <legend>Minimum requirements</legend>
+          <div class="form-grid">
+            <div class="admin-field"><label>OS</label><input name="min_os" /></div>
+            <div class="admin-field"><label>CPU</label><input name="min_cpu" /></div>
+            <div class="admin-field"><label>RAM</label><input name="min_ram" /></div>
+            <div class="admin-field"><label>GPU</label><input name="min_gpu" /></div>
+            <div class="admin-field"><label>Storage</label><input name="min_storage" /></div>
+            <div class="admin-field"><label>DirectX</label><input name="min_directx" /></div>
+          </div>
+        </fieldset>
+        <fieldset class="full">
+          <legend>Recommended requirements</legend>
+          <div class="form-grid">
+            <div class="admin-field"><label>OS</label><input name="rec_os" /></div>
+            <div class="admin-field"><label>CPU</label><input name="rec_cpu" /></div>
+            <div class="admin-field"><label>RAM</label><input name="rec_ram" /></div>
+            <div class="admin-field"><label>GPU</label><input name="rec_gpu" /></div>
+            <div class="admin-field"><label>Storage</label><input name="rec_storage" /></div>
+            <div class="admin-field"><label>DirectX</label><input name="rec_directx" /></div>
+          </div>
+        </fieldset>
+
+        <div class="admin-field">
+          <label>Price (KSh)</label>
+          <input name="price" type="number" min="0" step="1" value="0" />
+        </div>
+        <div class="admin-field">
+          <label>Offer price (optional)</label>
+          <input name="offerPrice" type="number" min="0" step="1" />
+        </div>
+        <div class="admin-field full">
+          <label>Download URL (direct link)</label>
+          <input name="downloadUrl" required placeholder="https://..." />
+        </div>
+
+        <div class="full">
+          <div class="check-row"><input type="checkbox" name="isFree" id="isFree" /><label for="isFree">Free title (no payment required)</label></div>
+          <div class="check-row"><input type="checkbox" name="published" id="published" checked /><label for="published">Published (visible on the site)</label></div>
+        </div>
+
+        <div class="full">
+          <button type="submit" class="btn" id="submitBtn">Add game</button>
+          <div class="msg" id="addMsg"></div>
+        </div>
+      </form>
+    </div>
+
+    <div class="admin-card">
+      <h2>Catalog</h2>
+      <div id="catalogMsg" class="msg">Loading…</div>
+      <table class="admin-table" id="catalogTable" style="display:none">
+        <thead><tr><th>Title</th><th>Type</th><th>Price</th><th>Status</th><th>Actions</th></tr></thead>
+        <tbody id="catalogBody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script type="module" src="js/admin.js"></script>
+</body>
+</html>

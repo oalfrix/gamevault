@@ -17,7 +17,7 @@ function navHTML(active) {
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
     </button>
     <a href="index.html" class="brand">
-      <span class="brand-mark">GV</span>Game<span class="dot">arena</span>
+      <span class="brand-mark">GV</span>Game<span class="dot">Vault</span>
     </a>
     <div class="nav-links">
       ${link("index.html", "Store", "store")}
@@ -50,7 +50,7 @@ function footerHTML() {
   const year = new Date().getFullYear();
   return `
   <div class="wrap">
-    <div>© ${year} Gamesarena. All game keys/downloads are provided by their respective publishers or modding communities.</div>
+    <div>© ${year} GameVault. All game keys/downloads are provided by their respective publishers or modding communities.</div>
     <div style="display:flex;gap:16px">
       <a href="${SOCIAL.whatsapp}" target="_blank" rel="noopener">WhatsApp</a>
       <a href="${SOCIAL.telegram}" target="_blank" rel="noopener">Telegram</a>
