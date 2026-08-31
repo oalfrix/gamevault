@@ -1,5 +1,5 @@
 -- =============================================================================
--- GameVault — Supabase schema
+-- Gamesarena — Supabase schema
 -- Run this in Supabase Dashboard → SQL Editor (or `supabase db push` with the CLI)
 -- =============================================================================
 
