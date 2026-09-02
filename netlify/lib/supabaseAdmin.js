@@ -5,7 +5,7 @@
 // environment variables (Site settings → Environment variables) — never
 // commit the service role key to git.
 // ============================================================================
-const { createClient } = require("@supabase/supabase-js");
+//const { createClient } = require("@supabase/supabase-js");
 
 //function getSupabaseAdmin() {
 //  const url = process.env.SUPABASE_URL;
